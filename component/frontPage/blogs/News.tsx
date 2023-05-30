@@ -46,7 +46,7 @@ const NewsPage = () => {
   return (
     <>
       <div className={style["dashboard"]}>
-        {newsData["articles"]
+        {!newsData || !newsData.articles?newsData["articles"]
           .filter((items: any) => {
             return (
               items.urlToImage != null &&
@@ -84,7 +84,7 @@ const NewsPage = () => {
                 </div>
               </Link>
             );
-          })}
+          }) :<></>}
       </div>
     </>
   );
