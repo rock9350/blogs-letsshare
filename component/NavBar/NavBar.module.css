@@ -1,0 +1,29 @@
+
+.nav{
+    display: flex;
+    justify-content: space-around;
+    border-bottom: 1.5px solid black;
+    padding: 15px;
+    background-color: #FFC017;
+    width: 100%;
+}
+.nav-logo{
+    width: 25%;
+}
+
+.nav-list{
+    font-weight: 500;
+    width: 25%;
+    display: flex;
+    justify-content: space-evenly;
+    list-style: none;
+    font-size: 14px;
+    font-family: inherit;
+    align-items: center;
+    
+}
+
+.nav-list>li>a{
+    text-decoration: none;
+    color: rgba(41, 41, 41, 1);
+}

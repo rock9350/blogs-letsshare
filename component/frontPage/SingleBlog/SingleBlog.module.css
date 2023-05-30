@@ -1,0 +1,36 @@
+.SingleblogBox {
+  border: 1px solid;
+  width: 45%;
+  padding: 3% 2%;
+  margin: 3% 25%;
+  box-shadow: 3px 3px 1px black;
+}
+.SingleblogImg {
+  width: 60%;
+  margin-left: 20%;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+.SingleblogTitle {
+  font-family: Century Gothic;
+  font-weight: 600;
+  font-size: 2vw;
+  margin-bottom: 35px;
+}
+.SingleblogDesc {
+  font-family: Century Gothic;
+  font-weight: 100;
+  font-size: 2vw;
+  margin-bottom: 40px;
+  /* padding: 5% 0%; */
+  color: gray;
+  /* font-weight: 300; */
+}
+.SingleblogDateBox {
+  display: flex;
+  justify-content: space-between;
+}
+.SingleblogDateBox > p {
+  font-family: Century Gothic;
+  font-weight: 600;
+}

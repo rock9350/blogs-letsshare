@@ -1,0 +1,50 @@
+.signup-box{
+    border: 1px solid black;
+    width: 45%;
+    margin: 100px 30%;
+    box-shadow: 10px 10px 10px black;
+}
+.formLabel{
+    font-family: Century Gothic;
+    font-size: 1.8em;
+    font-weight: 200;
+    padding: 20px 50px 10px 0px;
+}
+.formbuttonn{
+    font-family: Century Gothic;
+    margin-left: 20%;
+    padding: 2%;
+    width: 58%;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    background: white;
+    border: 1px solid black;
+    text-align: center;
+    display: inline-block;
+    box-shadow: 1px 1px 1px 1px black;
+}
+.formbuttonn:hover{
+   color: white;
+   background-color: black;
+}
+.formInput{
+    padding: 8px 10px;
+    border-radius: 5px;
+    border: none;
+    border-bottom: 1px solid;
+}
+.formTable{
+    padding-left: 20%;
+    padding-top: 5%;
+}
+.NoAcount{
+    font-family: Century Gothic;
+    font-size: 1.2rem;
+    text-align: center;
+    margin-bottom: 40px;
+}
+.Createone{
+    color: rgb(26, 137, 23);
+    font-weight: 600;
+
+}

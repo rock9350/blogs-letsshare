@@ -1,0 +1,49 @@
+.home {
+  display: flex;
+  /* justify-content: space-between; */
+  border-bottom: 1px solid black;
+  background-color: #ffc017;
+}
+
+.home-img {
+  margin-top: 9%;
+  margin-left: 5%;
+}
+
+.home-img > img {
+  width: 90%;
+}
+
+.home-start {
+  width: 55%;
+  padding: 6% 4% 6% 10%;
+  font-family: Lucida Console;
+}
+
+.home-start > h1 {
+  font-size: 5vw;
+  letter-spacing: -5px;
+}
+
+.home-start > h3 {
+  font-size: 1.3vw;
+  padding: 0% 40% 0% 0%;
+  font-weight: 500;
+  margin-top: 50px;
+  margin-bottom: 30px;
+}
+.home-start > button {
+  font-size: 1.3vw;
+  padding: 1.2% 4% 1.2% 4%;
+  margin-top: 3%;
+  border: 1px solid black;
+  background-color: white;
+  color: black;
+  box-shadow: 2px 2px 1px black;
+
+}
+
+.home-start > button:hover {
+  background-color: black;
+  color: whitesmoke;
+}
