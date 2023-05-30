@@ -47,7 +47,7 @@ const NewsPage = () => {
     if (!filteredArticles) {
       setNewsData({ ...newsData, articles: [] });
     }
-    setNewsData((prevData) => ({
+    setNewsData((prevData : any) => ({
       ...prevData,
       articles: [contentData, ...prevData.articles],
     }));
