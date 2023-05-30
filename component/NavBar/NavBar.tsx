@@ -11,7 +11,7 @@ const NavBar = () => {
 
         <ul className={style["nav-list"]} >
           <li>
-            <Link href="/Ourstory">Our story</Link>
+          
           </li>
           <li>
             <Link href="/Write">Write</Link>
