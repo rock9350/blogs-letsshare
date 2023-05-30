@@ -34,12 +34,13 @@ const NewsPage = () => {
   if (!newsData) {
     return <div>Loading...</div>;
   }
-  if (contentData) {
-    if (!newsData.articles) {
-      newsData.articles = [];
-    }
-    newsData.articles.unshift(contentData);
-  }
+
+  // if (contentData) {
+  //   if (!newsData.articles) {
+  //     newsData.articles = [];
+  //   }
+  //   newsData.articles.unshift(contentData);
+  // }
   
 
   return (
