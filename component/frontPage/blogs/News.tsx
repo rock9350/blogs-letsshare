@@ -6,6 +6,7 @@ import Link from "next/link";
 const NewsPage = () => {
   const [newsData, setNewsData] = useState<any>(null);
   const [contentData, setContentData] = useState(null);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -13,10 +14,16 @@ const NewsPage = () => {
         const res = await fetch(
           "https://newsapi.org/v2/everything?q=apple&from=2023-05-29&to=2023-05-29&sortBy=popularity&apiKey=bd30fa6193ce4be9b555e865013a2ff2"
         );
-        const data = await res.json();
-        setNewsData(data);
+
+        if (res.status === 200) {
+          const data = await res.json();
+          setNewsData(data);
+        } else {
+          setError(true);
+        }
       } catch (error) {
         console.log("Error: " + error);
+        setError(true);
       }
     };
 
@@ -28,6 +35,15 @@ const NewsPage = () => {
 
     fetchData();
   }, []);
+
+  if (error) {
+    return (
+      <div>
+        <h1>Error</h1>
+        <p>The server responded with a status of 426</p>
+      </div>
+    );
+  }
 
   if (!newsData) {
     return <div>Loading...</div>;
