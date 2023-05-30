@@ -11,7 +11,7 @@ const NewsPage = () => {
     const fetchData = async () => {
       try {
         const res = await fetch(
-          "https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=bd30fa6193ce4be9b555e865013a2ff2"
+          "https://newsapi.org/v2/everything?q=apple&from=2023-05-29&to=2023-05-29&sortBy=popularity&apiKey=bd30fa6193ce4be9b555e865013a2ff2"
         );
         const data = await res.json();
         setNewsData(data);
