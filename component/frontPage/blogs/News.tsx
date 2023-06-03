@@ -54,7 +54,9 @@ const NewsPage = () => {
     if (!newsData.value) {
       newsData.value = [];
     }
-    newsData.value.unshift(contentData);
+    console.log(newsData);
+    
+    newsData.unshift(contentData);
   }
 
   return (

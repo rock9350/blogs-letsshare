@@ -9,17 +9,21 @@ const Blogs = () => {
   const textArea = useRef(null);
 
   const content = {
-    name: "",
-    image: {
-      thumbnail: {
-        contentUrl: "",
+    title: "",
+    abstract: "",
+    byline: "By Demo Author",
+    published_date: new Date(),
+
+    multimedia: [
+      {
+        url: "",
       },
-    },
-    description: "",
-    provider: [{ name: "Demo" }],
-    datePublished: new Date(),
+    ],
     Check: false,
   };
+
+  
+
   const [Content, setContent] = useState(content);
 
   const resizeHeight = (e: any) => {
@@ -38,11 +42,11 @@ const Blogs = () => {
         const imageUrl: any = URL.createObjectURL(file);
         setImageData(imageUrl);
         let Contents = { ...Content };
-        Contents.image.thumbnail.contentUrl = imageUrl;
-        
+        Contents.multimedia[0].url = imageUrl;
+
         setContent({ ...Contents });
       }
-    }else {
+    } else {
       let inputValue = event.target.value;
       let Contents = { ...Content };
       setContent({ ...Contents, [inputName]: inputValue });
@@ -52,7 +56,7 @@ const Blogs = () => {
   const onClickHandle = () => {
     Content.Check = true;
     console.log(Content);
-    
+
     localStorage.setItem("key", JSON.stringify(Content));
   };
 
@@ -64,9 +68,9 @@ const Blogs = () => {
             <input
               className={style["input"]}
               type="text"
-              name="name"
+              name="title"
               onChange={onChangehandle}
-              value={Content.name}
+              value={Content.title}
               placeholder="Title"
             />
           </div>
@@ -76,7 +80,7 @@ const Blogs = () => {
                 type="file"
                 className={style["custom-file-input"]}
                 onChange={onChangehandle}
-                value={Content["image"]["thumbnail"]["contentUrl"]}
+                value={Content.multimedia[0].url}
                 name="urlToImage"
               />
             )}
@@ -97,8 +101,8 @@ const Blogs = () => {
               onInput={resizeHeight}
               onChange={onChangehandle}
               placeholder="Start Writing Blog"
-              value={Content.description}
-              name="description"
+              value={Content.abstract}
+              name="abstract"
             />
           </div>
           <div>
