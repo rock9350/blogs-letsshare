@@ -4,13 +4,23 @@ import style from "./SingleBlog.module.css";
 
 const SingleBlog = ({ blogName }: { blogName: any }) => {
   const [newsData, setNewsData] = useState<any>(null);
+  console.log(blogName);
 
   useEffect(() => {
     const fetchData = async () => {
+      const url =
+        "https://bing-news-search1.p.rapidapi.com/news?safeSearch=Off&textFormat=Raw";
+      const options = {
+        method: "GET",
+        headers: {
+          "X-BingApis-SDK": "true",
+          "X-RapidAPI-Key":
+            "a8eea09364msh764fd9747b71581p1fd23ajsn55ff9a275859",
+          "X-RapidAPI-Host": "bing-news-search1.p.rapidapi.com",
+        },
+      };
       try {
-        const res = await fetch(
-          "https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=bd30fa6193ce4be9b555e865013a2ff2"
-        );
+        const res = await fetch(url, options);
         const data = await res.json();
         setNewsData(data);
       } catch (error) {
@@ -28,27 +38,24 @@ const SingleBlog = ({ blogName }: { blogName: any }) => {
   return (
     <>
       <div className={style["SingleblogBox"]}>
-        {newsData["articles"]
+        {newsData["value"]
           .filter((item: any) => {
-            const name = `${item["source"]["name"]} ${item.author} ${item.publishedAt}`;
+            const name = `${item.datePublished}`;
             return name == blogName;
           })
           .map((items: any, index: any) => {
-            const titleParts = items.title.split("-");
-            const slicedTitle = titleParts[0].trim();
-
-            const date = new Date(items.publishedAt);
+            const date = new Date(items.datePublished);
             const formattedDate = date.toLocaleDateString();
             const formattedTime = date.toLocaleTimeString();
 
             return (
               <div key={index}>
                 <div className={style["SingleblogTitle"]}>
-                  <p>{slicedTitle}</p>
+                  <p>{items.name}</p>
                 </div>
                 <div>
                   <img
-                    src={items.urlToImage}
+                    src={items["image"]["thumbnail"]["contentUrl"]}
                     className={style["SingleblogImg"]}
                   ></img>
                 </div>
@@ -57,7 +64,10 @@ const SingleBlog = ({ blogName }: { blogName: any }) => {
                 </div>
 
                 <div className={style["SingleblogDateBox"]}>
-                  <p>By {items.author}</p>
+                  {items.provider.map((items: any, indexs: any) => {
+                    return <p key={indexs}>By {items.name}</p>;
+                  })}
+
                   <p>
                     {formattedDate} {formattedTime}
                   </p>

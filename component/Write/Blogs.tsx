@@ -5,26 +5,25 @@ import { useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-
 const Blogs = () => {
   const textArea = useRef(null);
 
   const content = {
-    source: {
-      id: "reuters",
-      name: "Reuters"
+    name: "",
+    image: {
+      thumbnail: {
+        contentUrl: "",
       },
-    title:"",
-    urlToImage:"",
-    description:"",
-    author:"Demo Author",
-    publishedAt:"Today",
-    Check:false
-  }
-  const [Content , setContent]  = useState(content);
+    },
+    description: "",
+    provider: [{ name: "Demo" }],
+    datePublished: new Date(),
+    Check: false,
+  };
+  const [Content, setContent] = useState(content);
 
-  const resizeHeight = (e:any) => {
-    let text :any = textArea.current;
+  const resizeHeight = (e: any) => {
+    let text: any = textArea.current;
     text.style.height = "61px";
     text.style.height = e.target.scrollHeight + 2 + "px";
   };
@@ -33,34 +32,43 @@ const Blogs = () => {
 
   const onChangehandle = (event: any) => {
     let inputName = event.target.name;
-    if(inputName == "urlToImage"){
+    if (inputName == "urlToImage") {
       const file = event.target.files[0];
       if (file) {
-        const imageUrl : any = URL.createObjectURL(file);
+        const imageUrl: any = URL.createObjectURL(file);
         setImageData(imageUrl);
-        let Contents = {...Content};
-        setContent({...Contents,[inputName]:imageUrl})
-      }
-    
-    }else{
-      let inputValue = event.target.value;
-      let Contents = {...Content};
-      setContent({...Contents,[inputName]:inputValue})
-    }
+        let Contents = { ...Content };
+        Contents.image.thumbnail.contentUrl = imageUrl;
         
+        setContent({ ...Contents });
+      }
+    }else {
+      let inputValue = event.target.value;
+      let Contents = { ...Content };
+      setContent({ ...Contents, [inputName]: inputValue });
+    }
   };
 
-  const onClickHandle = ( ) =>{
-    Content.Check=true;
-    localStorage.setItem('key', JSON.stringify(Content));
-  }
+  const onClickHandle = () => {
+    Content.Check = true;
+    console.log(Content);
+    
+    localStorage.setItem("key", JSON.stringify(Content));
+  };
 
   return (
     <>
       <div className={style["box"]}>
         <div className={style["blogBox"]}>
           <div>
-            <input className={style["input"]} type="text" name="title"  onChange={onChangehandle} value={Content.title} placeholder="Title" />
+            <input
+              className={style["input"]}
+              type="text"
+              name="name"
+              onChange={onChangehandle}
+              value={Content.name}
+              placeholder="Title"
+            />
           </div>
           <div>
             {!imageData && (
@@ -68,7 +76,7 @@ const Blogs = () => {
                 type="file"
                 className={style["custom-file-input"]}
                 onChange={onChangehandle}
-                value={Content.urlToImage}
+                value={Content["image"]["thumbnail"]["contentUrl"]}
                 name="urlToImage"
               />
             )}
@@ -94,7 +102,11 @@ const Blogs = () => {
             />
           </div>
           <div>
-            <Link href="/" onClick={onClickHandle}  className={style["Publishbuttonn"]}>
+            <Link
+              href="/"
+              onClick={onClickHandle}
+              className={style["Publishbuttonn"]}
+            >
               Publish
             </Link>
           </div>

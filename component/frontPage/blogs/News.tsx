@@ -10,13 +10,32 @@ const NewsPage = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      const url =
+        "https://bing-news-search1.p.rapidapi.com/news?safeSearch=Off&textFormat=Raw";
+      const options = {
+        method: "GET",
+        headers: {
+          "X-BingApis-SDK": "true",
+          "X-RapidAPI-Key": "a8eea09364msh764fd9747b71581p1fd23ajsn55ff9a275859",
+          "X-RapidAPI-Host": "bing-news-search1.p.rapidapi.com",
+        },
+      };
+      const url2 = 'https://bing-news-search1.p.rapidapi.com/news/search?q=teasla%20apple&freshness=Day&textFormat=Raw&safeSearch=Off';
+const options2 = {
+	method: 'GET',
+	headers: {
+		'X-BingApis-SDK': 'true',
+		'X-RapidAPI-Key': 'a8eea09364msh764fd9747b71581p1fd23ajsn55ff9a275859',
+		'X-RapidAPI-Host': 'bing-news-search1.p.rapidapi.com'
+	}
+};
+
       try {
-        const res = await fetch(
-          "https://newsapi.org/v2/everything?q=apple&from=2023-05-29&to=2023-05-29&sortBy=popularity&apiKey=bd30fa6193ce4be9b555e865013a2ff2"
-        );
+        const res = await fetch(url, options);
 
         if (res.status === 200) {
           const data = await res.json();
+
           setNewsData(data);
         } else {
           setError(true);
@@ -49,159 +68,52 @@ const NewsPage = () => {
     return <div>Loading...</div>;
   }
 
-  const filteredArticles = newsData?.articles?.filter((item: any) => {
-    return (
-      item.urlToImage != null &&
-      item.description != null &&
-      item.author != null &&
-      item.author.trim() !== "" &&
-      item.publishedAt != null
-    );
-  });
-
   if (contentData) {
-    if (!filteredArticles) {
-      setNewsData({ ...newsData, articles: [] });
+    if (!newsData.value) {
+      newsData.value = [];
     }
-    setNewsData((prevData : any) => ({
-      ...prevData,
-      articles: [contentData, ...prevData.articles],
-    }));
+    newsData.value.unshift(contentData);
   }
 
   return (
     <div className={style["dashboard"]}>
-      {filteredArticles?.map((item: any, index: any) => {
-        const titleParts = item.title.split("-");
-        const slicedTitle = titleParts[0].trim();
-
-        const date = new Date(item.publishedAt);
-        const formattedDate = date.toLocaleDateString();
-        const formattedTime = date.toLocaleTimeString();
-
-        return (
-          <Link
-            href={`/blogs/${item["source"]["name"]} ${item.author} ${item.publishedAt}`}
-            key={index}
-            className={style["dashboard-item"]}
-          >
-            <img src={item.urlToImage} className={style["blogImg"]} alt={item.title} />
-            <div className={style["blogDetails"]}>
-              <p className={style["blogTitle"]}>{slicedTitle}</p>
-              <p className={style["blogdescription"]}>{item.description}</p>
-              <div className={style["blogDateBox"]}>
-                <p>By {item.author}</p>
-                <p>
-                  {formattedDate} {formattedTime}
-                </p>
-              </div>
-            </div>
-          </Link>
-        );
-      })}
+      {newsData.value &&
+        newsData.value
+          .filter((item: any) => item?.image !== undefined)
+          .map((item: any, index: any) => {
+            const date = new Date(item.datePublished);
+            const formattedDate = date.toLocaleDateString();
+            const formattedTime = date.toLocaleTimeString();
+          console.log(item["image"]["thumbnail"]["contentUrl"]);
+          
+            return (
+              <Link
+                href={`/blogs/${item.datePublished}`}
+                key={index}
+                className={style["dashboard-item"]}
+              >
+                <img
+                  src={item["image"]["thumbnail"]["contentUrl"]}
+                  className={style["blogImg"]}
+                  alt={item.name}
+                />
+                <div className={style["blogDetails"]}>
+                  <p className={style["blogTitle"]}>{item.name}</p>
+                  <p className={style["blogdescription"]}>{item.description}</p>
+                  <div className={style["blogDateBox"]}>
+                    {item.provider.map((items: any, indexs: any) => {
+                      return <p key={indexs}>By {items.name}</p>;
+                    })}
+                    <p>
+                      {formattedDate} {formattedTime}
+                    </p>
+                  </div>
+                </div>
+              </Link>
+            );
+          })}
     </div>
   );
 };
 
 export default NewsPage;
-
-
-
-
-
-
-
-
-// "use client";
-// import React, { useEffect, useState } from "react";
-// import style from "./News.module.css";
-// import Link from "next/link";
-
-// const NewsPage = () => {
-//   const [newsData, setNewsData] = useState<any>(null);
-//   const [contentData, setContentData] = useState(null);
-//   const [Array , setArray] = useState([]);
-
-//   useEffect(() => {
-//     const fetchData = async () => {
-//       console.log("get");
-//       try {
-//         const res = await fetch(
-//           "https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=bd30fa6193ce4be9b555e865013a2ff2"
-//         );
-//         const data = await res.json();
-//         setNewsData(data);
-//       } catch (error) {
-//         console.log("Error :" + error);
-//       }
-//     };
-
-//     const storedContent = localStorage.getItem("key");
-//     if (storedContent) {
-//       setContentData(JSON.parse(storedContent));
-//       localStorage.removeItem("key");
-//     }
-
-//     fetchData();
-//   }, []);
-
-//   if (!newsData) {
-//     return <div>Loading...</div>;
-//   }
-
-//   // if (contentData) {
-//   //   if (!newsData.articles) {
-//   //     newsData.articles = [];
-//   //   }
-//   //   newsData.articles.unshift(contentData);
-//   // }
-  
-
-//   return (
-//     <>
-//       <div className={style["dashboard"]}>
-//         {!newsData || !newsData.articles?newsData["articles"]
-//           .filter((items: any) => {
-//             return (
-//               items.urlToImage != null &&
-//               items.description != null &&
-//               items.author != null &&
-//               items.author != " " &&
-//               items.publishedAt != null
-//             );
-//           })
-//           .map((item: any, index: any) => {
-//             const titleParts = item.title.split("-");
-//             const slicedTitle = titleParts[0].trim();
-
-//             const date = new Date(item.publishedAt);
-//             const formattedDate = date.toLocaleDateString();
-//             const formattedTime = date.toLocaleTimeString();
-
-//             return (
-//               <Link
-//                 href={`/blogs/${item["source"]["name"]} ${item.author} ${item.publishedAt}`}
-//                 key={index}
-//                 className={style["dashboard-item"]}
-//               >
-//                 {/* <Image src={item.urlToImage} alt={item.name} width="100" height="100" ></Image> */}
-//                 <img src={item.urlToImage} className={style["blogImg"]}></img>
-//                 <div className={style["blogDetails"]}>
-//                   <p className={style["blogTitle"]}>{slicedTitle}</p>
-//                   <p className={style["blogdescription"]}>{item.description}</p>
-//                   <div className={style["blogDateBox"]}>
-//                     <p>By {item.author}</p>
-//                     <p>
-//                       {formattedDate} {formattedTime}
-//                     </p>
-//                   </div>
-//                 </div>
-//               </Link>
-//             );
-//           }) :<></>}
-//       </div>
-//     </>
-//   );
-// };
-
-// export default NewsPage;
