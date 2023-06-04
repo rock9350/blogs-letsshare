@@ -84,7 +84,7 @@ const NewsPage = () => {
                   <p className={style["blogTitle"]}>{item.title}</p>
                   <p className={style["blogdescription"]}>{item.abstract}</p>
                   <div className={style["blogDateBox"]}>
-                    <p>By {item.byline}</p>
+                    <p>{item.byline}</p>
                     <p>
                       {formattedDate} {formattedTime}
                     </p>
